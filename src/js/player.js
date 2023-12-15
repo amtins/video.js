@@ -1420,6 +1420,11 @@ class Player extends Component {
     // reset the error state
     this.error(null);
 
+    // close text track settings
+    if (this.textTrackSettings) {
+      this.textTrackSettings.close();
+    }
+
     // Update the duration
     this.handleTechDurationChange_();
 
@@ -3702,6 +3707,10 @@ class Player extends Component {
         title: undefined,
         description: undefined
       });
+    }
+
+    if (this.textTrackSettings) {
+      this.textTrackSettings.close();
     }
 
     if (isEvented(this)) {

@@ -383,3 +383,37 @@ QUnit.test('should update on languagechange', function(assert) {
 
   player.dispose();
 });
+
+QUnit.test('should close text track settings on loadstart', function(assert) {
+  const player = TestHelpers.makePlayer({
+    tracks,
+    persistTextTrackSettings: false
+  });
+
+  player.textTrackSettings.open();
+
+  assert.ok(player.textTrackSettings.opened(), 'textTrackSettings should be open');
+
+  player.tech_.trigger('loadstart');
+
+  assert.notOk(player.textTrackSettings.opened(), 'textTrackSettings should be close');
+
+  player.dispose();
+});
+
+QUnit.test('should close text track settings when the player is reset', function(assert) {
+  const player = TestHelpers.makePlayer({
+    tracks,
+    persistTextTrackSettings: false
+  });
+
+  player.textTrackSettings.open();
+
+  assert.ok(player.textTrackSettings.opened(), 'textTrackSettings should be open');
+
+  player.reset();
+
+  assert.notOk(player.textTrackSettings.opened(), 'textTrackSettings should be close');
+
+  player.dispose();
+});
